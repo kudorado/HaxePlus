@@ -1,5 +1,6 @@
 package flixel.addons.ui;
 
+import haxeplus.Debugger;
 #if flixel_addons
 import flixel.addons.transition.Transition;
 import flixel.addons.transition.FlxTransitionableState;
@@ -202,6 +203,8 @@ class FlxUIState extends FlxState implements IEventGetter implements IFlxUIState
 
 		tooltips.init();
 
+		Debugger.create(this, camera);
+		
 		super.create();
 
 		cleanup();
@@ -210,6 +213,10 @@ class FlxUIState extends FlxState implements IEventGetter implements IFlxUIState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		
+		if (Debugger.instance != null)
+			Debugger.instance.update(elapsed);
+
 		if (tooltips != null)
 		{
 			tooltips.update(elapsed);

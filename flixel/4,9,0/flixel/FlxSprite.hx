@@ -1,5 +1,6 @@
 package flixel;
 
+import haxeplus.Debugger;
 import flixel.input.mouse.FlxMouseEventManager;
 import flash.display.BitmapData;
 import flash.display.BlendMode;
@@ -272,11 +273,6 @@ class FlxSprite extends FlxObject
 		return defaultDebugObject;
 	}
 
-	private function mouseDown(obj:FlxObject) {
-		if (Debugger.instance != null)
-			Debugger.instance.Debug(this);
-	}
-
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset)
 	{
 		super(X, Y);
@@ -292,6 +288,12 @@ class FlxSprite extends FlxObject
 		FlxMouseEventManager.add(this, mouseDown, null, null, null, null);
 		#end
 	}
+
+	private function mouseDown(obj:FlxObject) {
+		if (Debugger.instance != null)
+			Debugger.instance.Debug(this);
+	}
+
 
 	@:noCompletion
 	override function initVars():Void

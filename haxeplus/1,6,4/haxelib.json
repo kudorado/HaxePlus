@@ -1,0 +1,11 @@
+{
+	"name": "haxeplus",
+	"url": "https://github.com/kudorado/HaxePlus",
+	"license": "Appache 2.0",
+	"contributors":["kudorado"],
+	"tags": ["haxeplus"],
+	"description": "Addons & debug for Haxe",
+	"version": "1.0.0",
+	"dependencies": {},
+	"releasenote": "First release"
+}
