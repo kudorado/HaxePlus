@@ -267,10 +267,10 @@ class FlxSprite extends FlxObject
 	 *                          (OPTIONAL - for simple stuff only, do NOT use for animated images!).
 	 */
 
-	var defaultDebugObject = "defaultObject";
+	var defaultDebugName = "defaultObject";
 	public function debugName() 
 	{
-		return defaultDebugObject;
+		return defaultDebugName;
 	}
 
 	public function new(?X:Float = 0, ?Y:Float = 0, ?SimpleGraphic:FlxGraphicAsset)
@@ -281,7 +281,6 @@ class FlxSprite extends FlxObject
 		if (SimpleGraphic != null) 
 		{
 			loadGraphic(SimpleGraphic);
-			defaultDebugObject = SimpleGraphic;
 		}
 
 		#if debug
@@ -404,9 +403,13 @@ class FlxSprite extends FlxObject
 	 */
 	public function loadGraphic(Graphic:FlxGraphicAsset, Animated:Bool = false, Width:Int = 0, Height:Int = 0, Unique:Bool = false, ?Key:String):FlxSprite
 	{
+		if(Graphic != null)
+			defaultDebugName = Graphic;
+		
 		var graph:FlxGraphic = FlxG.bitmap.add(Graphic, Unique, Key);
 		if (graph == null)
 			return this;
+
 
 		if (Width == 0)
 		{

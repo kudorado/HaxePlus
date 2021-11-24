@@ -68,7 +68,7 @@ class Debugger
 
 	private function createShitText(color:FlxColor = FlxColor.WHITE): FlxText
 	{
-		var text = new FlxText(30, 30 * index, 0, "", 20);
+		var text = new FlxText(30, FlxG.height - 30 * (index + 1), 0, "", 20);
 		text.setFormat(Paths.font("vcr.ttf"), 20, color, RIGHT);
 		text.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 		text.scrollFactor.set();
@@ -83,7 +83,7 @@ class Debugger
 
 	private function createShitButton(buttonLabel:String): FlxButton
 	{
-		var button = new FlxButton(30, 30 * index, buttonLabel, function onClick()
+		var button = new FlxButton(30, FlxG.height - 30 * (index + 1), buttonLabel, function onClick()
 		{
 			selectionObject = null;
 		});
@@ -99,7 +99,7 @@ class Debugger
 	private function initDebugObjects()
 	{
 
-		obj = createShitText();
+		obj = createShitText(FlxColor.RED);
 		x = createShitText();
 		y = createShitText();
 		scaleX = createShitText();
@@ -196,7 +196,7 @@ class Debugger
 		x.text = "x: " +  selectionObject.x + " | flip X: " + flipX;
 		y.text = "y: " +  selectionObject.y + " | flip Y: " + flipY;
 
-		
+
 		if (selectionObject.scale != null) 
 		{
 			scaleX.text = "scale X: " + round(selectionObject.scale.x);
@@ -207,12 +207,13 @@ class Debugger
 		remove.visible = true;
 
 
-		obj.text = appendControlHepler(obj.text, "| ←↓↑→ | | ASWD | | JKIL |");
-		x.text = appendControlHepler(x.text, "| X |");
-		y.text = appendControlHepler(y.text, "| Y |");
-		scaleX.text = appendControlHepler(scaleX.text, "| [] |");
-		scaleX.text = appendControlHepler(scaleY.text, "| ;' |");
-		rotation.text = appendControlHepler(rotation.text, "| ,. |");
+		x.text = appendControlHepler(x.text, "|←↓↑→| |ASWD| |JKIL| - X -");
+		y.text = appendControlHepler(y.text, "|←↓↑→| |ASWD| |JKIL| - Y -");
+
+		scaleX.text = appendControlHepler(scaleX.text, "|[]|");
+		scaleY.text = appendControlHepler(scaleY.text, "|;'|");
+
+		rotation.text = appendControlHepler(rotation.text, "|,.|");
 
 		var upP = FlxG.keys.anyPressed([W, UP, I]);
 		var rightP = FlxG.keys.anyPressed([D, RIGHT, L]);
