@@ -21,7 +21,7 @@ class Debugger
 	private var group:FlxGroup;
 	private var camera:FlxCamera;
 
-
+	private var cam:FlxText;
 	private var obj:FlxText;
 	private var x:FlxText;
 	private var y:FlxText;
@@ -99,7 +99,8 @@ class Debugger
 	private function initDebugObjects()
 	{
 
-		obj = createShitText(FlxColor.RED);
+		cam = createShitText();
+		obj = createShitText();
 		x = createShitText();
 		y = createShitText();
 		scaleX = createShitText();
@@ -143,16 +144,7 @@ class Debugger
 			}
 
 			camera = cams[cameraIndex];
-
-			group.remove(obj);
-			group.remove(x);
-			group.remove(y);
-			group.remove(scaleX);
-			group.remove(scaleY);
-			group.remove(rotation);
-			group.remove(remove);
-
-			UnSelect();
+			cleanupObject();
 			create (group, camera); 
 		}
 	}
@@ -178,12 +170,13 @@ class Debugger
 
 		if (selectionObject == null)
 		{
-			obj.text = "SELECT AN OBJECT TO DEBUG!";
+			cam.text = "SELECT AN OBJECT TO DEBUG!";
 			y.text = "";
 			x.text = "";
 			scaleX.text = "";
 			scaleY.text = "";
 			rotation.text = "";
+			obj.text = "";
 			remove.visible = false;
 			return;
 		}
@@ -192,7 +185,9 @@ class Debugger
 		var flipY = selectionObject.flipY;
 
 
+		cam.text = "Camera" + "(" + cameraIndex + ")";
 		obj.text = selectionObject.debugName().toUpperCase();
+
 		x.text = "x: " +  selectionObject.x + " | flip X: " + flipX;
 		y.text = "y: " +  selectionObject.y + " | flip Y: " + flipY;
 
@@ -207,6 +202,7 @@ class Debugger
 		remove.visible = true;
 
 
+		cam.text =  appendControlHepler(cam.text, "|C|");
 		x.text = appendControlHepler(x.text, "|←↓↑→| |ASWD| |JKIL| - X -");
 		y.text = appendControlHepler(y.text, "|←↓↑→| |ASWD| |JKIL| - Y -");
 
@@ -254,10 +250,10 @@ class Debugger
 
 		//-------------- rotation -----------
 		if(rotationPos)
-			selectionObject.angle += elapsed * multiplier * 2;
+			selectionObject.angle += elapsed * (multiplier > 1 ? 10 : 1) * 2;
 
 		if(rotationNes)
-			selectionObject.angle -= elapsed * multiplier * 2;
+			selectionObject.angle -= elapsed * (multiplier > 1 ? 10 : 1) * 2;
 
 		//--------------- scale -------------
 		if(scaleXNeg || (scaleYNeg && holdShift))
@@ -281,8 +277,32 @@ class Debugger
 			selectionObject.flipY = !selectionObject.flipY;
 
 		updateCamera();
+		updateObject();
 
 	}
+
+	function cleanupObject() 
+	{
+		group.remove(obj);
+		group.remove(x);
+		group.remove(y);
+		group.remove(scaleX);
+		group.remove(scaleY);
+		group.remove(rotation);
+		group.remove(remove);
+		group.remove(cam);
+		UnSelect();
+	}
+
+	function updateObject()
+	{
+		if (FlxG.keys.anyJustPressed([Q]))
+		{
+			cleanupObject();	
+			create (group, camera); 
+		}
+	}
+
 
 
 }
