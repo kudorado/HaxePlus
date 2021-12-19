@@ -323,12 +323,28 @@ class FlxAtlasFrames extends FlxFramesCollection
 			var offset = FlxPoint.get(0, 0);
 			var rect = FlxRect.get(Std.parseInt(sprite.get("x")), Std.parseInt(sprite.get("y")), Std.parseInt(sprite.get("w")), Std.parseInt(sprite.get("h")));
 			var sourceSize = FlxPoint.get(rect.width, rect.height);
+		
+			var pX = Std.parseFloat(sprite.get("pX"));
+			var pY = Std.parseFloat(sprite.get("pY"));
+			var w = Std.parseInt(sprite.get("w"));
+			var h = Std.parseInt(sprite.get("h"));
 
 			if (trimmed)
 			{
-				offset.set(Std.parseInt(sprite.get("oX")), Std.parseInt(sprite.get("oY")));
+		
+						
+				var oW = Std.parseInt(sprite.get("oW"));
+				var oH = Std.parseInt(sprite.get("oH"));
+
+				var oX = Std.parseInt(sprite.get("oX"));
+				var oY = Std.parseInt(sprite.get("oY"));
+
+				// offset.set(oX, oY);
+				offset.set((w / 2) - (pX * w) - ((150) - oX), (h / 2) - (pY * h) - (150 - oY));
 				sourceSize.set(Std.parseInt(sprite.get("oW")), Std.parseInt(sprite.get("oH")));
 			}
+			else //shit, i hate it, fuck you.
+				offset.set(((w / 2) - pX * w), (h / 2) - (pY * h));
 
 			frames.addAtlasFrame(rect, sourceSize, offset, name, angle);
 		}
