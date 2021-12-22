@@ -208,7 +208,7 @@ class AdMob {
             case "DISPLAYING":
                 FlxG.sound.muted = true;
 
-        }
+        }   
        
        // else //KUDORADOtrace("Interstitial event: "+event+ " (assign AdMob.onInterstitialEvent to get this events and avoid this traces)");
     }

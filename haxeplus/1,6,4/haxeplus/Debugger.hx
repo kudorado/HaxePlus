@@ -68,7 +68,7 @@ class Debugger
 
 	private function createShitText(color:FlxColor = FlxColor.WHITE): FlxText
 	{
-		var text = new FlxText(30, FlxG.height - 30 * (index + 1), 0, "", 20);
+		var text = new FlxText(30, 30 * (index + 1), 0, "", 20);
 		text.setFormat(Paths.font("vcr.ttf"), 20, color, RIGHT);
 		text.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 		text.scrollFactor.set();
@@ -171,8 +171,8 @@ class Debugger
 		if (selectionObject == null)
 		{
 			cam.text = "SELECT AN OBJECT TO DEBUG!";
-			y.text = "";
 			x.text = "";
+			y.text = "";
 			scaleX.text = "";
 			scaleY.text = "";
 			rotation.text = "";
@@ -188,8 +188,8 @@ class Debugger
 		cam.text = "Camera" + "(" + cameraIndex + ")";
 		obj.text = selectionObject.debugName().toUpperCase();
 
-		x.text = "x: " +  selectionObject.x + " | flip X: " + flipX;
-		y.text = "y: " +  selectionObject.y + " | flip Y: " + flipY;
+		x.text = "x: " + Std.int(selectionObject.x) + " | flip X: " + flipX;
+		y.text = "y: " + Std.int(selectionObject.y) + " | flip Y: " + flipY;
 
 
 		if (selectionObject.scale != null) 
@@ -232,10 +232,10 @@ class Debugger
 		var fY = FlxG.keys.anyJustPressed([Y]);
 
 		
-		var multiplier = 1;
+		var multiplier = 0.5;
 		var holdShift = FlxG.keys.pressed.SHIFT;
 		if (holdShift)
-			multiplier = 5;
+			multiplier = 2;
 
 		//------------- position ----------
 		if (upP)
@@ -256,16 +256,16 @@ class Debugger
 			selectionObject.angle -= elapsed * (multiplier > 1 ? 10 : 1) * 2;
 
 		//--------------- scale -------------
-		if(scaleXNeg || (scaleYNeg && holdShift))
+		if(scaleXNeg || (scaleYNeg && !holdShift))
 			selectionObject.scale.x	 -= elapsed;
 
-		if(scaleXPos || (scaleYPos && holdShift))
+		if(scaleXPos || (scaleYPos && !holdShift))
 			selectionObject.scale.x += elapsed ;
 
-		if(scaleYNeg || (scaleXNeg && holdShift))
+		if(scaleYNeg || (scaleXNeg && !holdShift))
 			selectionObject.scale.y -= elapsed ;
 
-		if(scaleYPos || (scaleXPos && holdShift))
+		if(scaleYPos || (scaleXPos && !holdShift))
 			selectionObject.scale.y += elapsed ;
 
 		//---------------- flip --------------
