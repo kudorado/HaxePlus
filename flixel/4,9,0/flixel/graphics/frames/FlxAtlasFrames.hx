@@ -293,7 +293,7 @@ class FlxAtlasFrames extends FlxFramesCollection
 	 *                        Or you can just pass a path to the XML file in the assets directory.
 	 * @return  Newly created `FlxAtlasFrames` collection.
 	 */
-	public static function fromTexturePackerXml(Source:FlxGraphicAsset, Description:String):FlxAtlasFrames
+	public static function fromTexturePackerXml(Source:FlxGraphicAsset, Description:String, offsetX:Float = 150, offsetY:Float = 150):FlxAtlasFrames
 	{
 		var graphic:FlxGraphic = FlxG.bitmap.add(Source, false);
 		if (graphic == null)
@@ -340,11 +340,30 @@ class FlxAtlasFrames extends FlxFramesCollection
 				var oY = Std.parseInt(sprite.get("oY"));
 
 				// offset.set(oX, oY);
-				offset.set((w / 2) - (pX * w) - ((150) - oX), (h / 2) - (pY * h) - (150 - oY));
+				offset.set((w / 2) - (pX * w) - ((offsetX) - oX), (h / 2) - (pY * h) - (offsetY - oY));
 				sourceSize.set(Std.parseInt(sprite.get("oW")), Std.parseInt(sprite.get("oH")));
 			}
 			else //shit, i hate it, fuck you.
-				offset.set(((w / 2) - pX * w), (h / 2) - (pY * h));
+			{
+
+				var daX:Float = 0;
+				var daY:Float = 0;
+
+				if (pX >= 0.5) 
+					daX = (w / 2) - (pX * w);			
+				else
+					daX = (pX * w) -  (w / 2);			
+
+				if(pY >= 0.5)
+					daY = (h / 2) - (pY * h)
+				else
+					daY = (pY * h) - (h / 2);
+
+
+				
+				offset.set(daX, daY);
+
+			}
 
 			frames.addAtlasFrame(rect, sourceSize, offset, name, angle);
 		}
