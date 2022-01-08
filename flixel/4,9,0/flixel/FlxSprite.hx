@@ -282,9 +282,10 @@ class FlxSprite extends FlxObject
 		{
 			loadGraphic(SimpleGraphic);
 		}
-
+		#if !mobile
 		#if debug
 		FlxMouseEventManager.add(this, mouseDown, null, null, null, null);
+		#end
 		#end
 	}
 

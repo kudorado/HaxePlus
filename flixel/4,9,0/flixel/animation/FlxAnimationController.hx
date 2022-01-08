@@ -472,6 +472,9 @@ class FlxAnimationController implements IFlxDestroyable
 	 */
 	public function addByPrefix(Name:String, Prefix:String, FrameRate:Int = 30, Looped:Bool = true, FlipX:Bool = false, FlipY:Bool = false):Void
 	{
+		if (Name == 'idle') //here we hardcode again LOL!
+			Looped = true;
+
 		if (_sprite.frames != null)
 		{
 			var animFrames:Array<FlxFrame> = new Array<FlxFrame>();

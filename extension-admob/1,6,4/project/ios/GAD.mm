@@ -302,7 +302,12 @@ GADRequest *_admobexGetGADRequest(){
 }
 -(void)interstitialDidClose {
     reportInterstitialEvent(ADMOB_CLOSED);
+
+    [IronSource loadInterstitial];
+
     NSLog(@"IS Interstitial closed!");
+    NSLog(@"Request new Interstitial closed!");
+
 }
 
 -(void)interstitialDidOpen {
@@ -423,11 +428,13 @@ namespace admobex {
         NSLog(@"showInterstitial 328");
 
         if(interstitialListener==nil) {
+            NSLog(@"interstitialListener nil");
             return false;
         }
 
         if(![interstitialListener isReady])
         {
+            NSLog(@"interstitialListener not ready");
             return false;
         }
 

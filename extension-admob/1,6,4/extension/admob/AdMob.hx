@@ -45,13 +45,14 @@ class AdMob {
         minInterval = 60;
         #end
 
+        trace('daShow');
         #if ios
         if( (Lib.getTimer()-lastTimeInterstitial)<(minInterval*1000) ) return false;
 		#end
         // if( minCallsBeforeDisplay > displayCallsCounter ) return false;
 	    	// displayCallsCounter = 0;
 
-        lastTimeInterstitial = Lib.getTimer();
+        // lastTimeInterstitial = Lib.getTimer();
 
             #if android
              return __showInterstitial();

@@ -50,9 +50,11 @@ class Debugger
 
 	public static function create(group:FlxGroup, camera:FlxCamera)
 	{
+		#if !mobile
 		#if debug
 		instance = new Debugger();
 		instance.init(group, camera);
+		#end
 		#end
 	}
 
