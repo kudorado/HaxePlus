@@ -306,7 +306,7 @@ GADRequest *_admobexGetGADRequest(){
     [IronSource loadInterstitial];
 
     NSLog(@"IS Interstitial closed!");
-    NSLog(@"Request new Interstitial closed!");
+    NSLog(@"Request neweaiaien Interstitial closed!");
 
 }
 

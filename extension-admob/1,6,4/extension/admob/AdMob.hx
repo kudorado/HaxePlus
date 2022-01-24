@@ -17,6 +17,8 @@ class AdMob {
     private static var __initHaxeObject:Dynamic->Void = function(instance:Dynamic){};
 
     private static var __showBanner:Void->Void = function(){};
+    private static var __requestRating:Void->Void = function(){};
+
     private static var __hideBanner:Void->Void = function(){};
     private static var __showInterstitial:Void->Bool = function(){ return false; };
     private static var __showRewardVideo:Void->Bool = function(){ return false; };
@@ -36,23 +38,19 @@ class AdMob {
 		var result:Bool = __showRewardVideo();
 		return result;
     }
+
     public static function showInterstitial(minInterval:Int=60, minCallsBeforeDisplay:Int=0) {
         // displayCallsCounter++;
         // #if android 
         // minInterval = 30;
         // #end
-        #if ios
-        minInterval = 60;
-        #end
+        minInterval = 0;
 
-        trace('daShow');
-        #if ios
         if( (Lib.getTimer()-lastTimeInterstitial)<(minInterval*1000) ) return false;
-		#end
         // if( minCallsBeforeDisplay > displayCallsCounter ) return false;
 	    	// displayCallsCounter = 0;
 
-        // lastTimeInterstitial = Lib.getTimer();
+        lastTimeInterstitial = Lib.getTimer();
 
             #if android
              return __showInterstitial();
