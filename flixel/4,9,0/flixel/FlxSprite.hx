@@ -284,7 +284,12 @@ class FlxSprite extends FlxObject
 		}
 		#if !mobile
 		#if debug
-		FlxMouseEventManager.add(this, mouseDown, null, null, null, null);
+		FlxMouseEventManager.add(this, 
+			mouseDown, 
+			function (obj:FlxObject){},
+			function (obj:FlxObject){},
+			function (obj:FlxObject){});
+			
 		#end
 		#end
 	}
