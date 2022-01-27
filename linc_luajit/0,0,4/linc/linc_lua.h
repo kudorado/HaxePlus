@@ -1,6 +1,6 @@
 #ifndef _LINC_LUA_H_
 #define _LINC_LUA_H_
-
+#endif
 
 #ifndef HXCPP_H
     #include <hxcpp.h>
@@ -63,4 +63,4 @@ namespace linc {
 
 } //linc
 
-#endif //_LINC_LUA_H_
+// #endif //_LINC_LUA_H_
