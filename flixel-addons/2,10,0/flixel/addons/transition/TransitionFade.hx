@@ -35,7 +35,7 @@ class TransitionFade extends TransitionEffect
 	{
 		super(data);
 
-		if (SelectionState.didLoadout)
+		if (LoadingState.didLoadout)
 		{
 		
 
