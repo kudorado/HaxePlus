@@ -31,6 +31,9 @@ class Debugger
 
 	private var rotation:FlxText;
 
+	var daOldVisible = false;
+	var daOldAlpha:Float = 0;
+
 	var index:Int;
 
 	static var cameraIndex:Int = 0;
@@ -120,6 +123,8 @@ class Debugger
 
 		this.selectionObject = obj;
 		this.selectionObject.color = FlxColor.RED;
+		daOldVisible = this.selectionObject.visible;
+		daOldAlpha = this.selectionObject.alpha;
 	}
 
 	public function UnSelect()
@@ -127,6 +132,9 @@ class Debugger
 		if (this.selectionObject == null)
 			return;
 
+
+		this.selectionObject.visible = daOldVisible;
+		this.selectionObject.alpha = daOldAlpha;
 		this.selectionObject.color = FlxColor.WHITE;
 		this.selectionObject = null;
 	}
@@ -167,6 +175,7 @@ class Debugger
 		return text;
 	}
 
+
 	public function update(elapsed:Float)
 	{
 
@@ -189,6 +198,9 @@ class Debugger
 
 		cam.text = "Camera" + "(" + cameraIndex + ")";
 		obj.text = selectionObject.debugName().toUpperCase();
+
+		obj.visible = true;
+		obj.alpha = 1;
 
 		x.text = "x: " + Std.int(selectionObject.x) + " | flip X: " + flipX;
 		y.text = "y: " + Std.int(selectionObject.y) + " | flip Y: " + flipY;
@@ -277,6 +289,8 @@ class Debugger
 	
 		if(fY) 
 			selectionObject.flipY = !selectionObject.flipY;
+
+		// selectionObject.updateHitbox();
 
 		updateCamera();
 		updateObject();

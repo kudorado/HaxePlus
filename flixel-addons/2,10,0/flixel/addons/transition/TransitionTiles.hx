@@ -1,5 +1,7 @@
 package flixel.addons.transition;
 
+import state.*;
+
 import flash.display.BitmapData;
 import flixel.addons.transition.TransitionEffect;
 import flixel.addons.transition.FlxTransitionSprite.TransitionStatus;
@@ -70,7 +72,25 @@ class TransitionTiles extends TransitionEffect
 				{
 					frameRate = data.tileData.frameRate;
 				}
+
+
+
 				var ts = new FlxTransitionSprite(tx, ty, delay, data.tileData.asset, data.tileData.width, data.tileData.height, frameRate);
+
+				//shit code 
+				trace('shiiit code');
+				// if (SelectionState.didLoadout)
+				// {
+				// 	var daLoadout = "freeplay/" + GameState.playingSong.character;
+				// 	ts.loadGraphic(Paths.image(daLoadout));
+				// 	ts.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
+				// 	ts.antialiasing = true;
+				// 	ts.screenCenter();
+				// 	// ts.color = FlxColor.WHITE;
+				// 	trace('sonuva bitch');
+				// }
+				// else
+
 				ts.color = data.color;
 				ts.scrollFactor.set(0, 0);
 				_grpSprites.add(ts);

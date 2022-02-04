@@ -1,5 +1,11 @@
 package flixel.addons.transition;
 
+import state.*;
+
+import flixel.util.FlxTimer;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+
 import flash.display.BitmapData;
 import flixel.addons.transition.TransitionEffect;
 import flixel.addons.transition.FlxTransitionSprite.TransitionStatus;
@@ -15,11 +21,6 @@ import openfl.geom.Point;
 
 @:keep @:bitmap("assets/images/transitions/diagonal_gradient.png")
 private class GraphicDiagonalGradient extends BitmapData {}
-
-/**
- *
- * @author larsiusprime
- */
 class TransitionFade extends TransitionEffect
 {
 	var back:FlxSprite;
@@ -34,9 +35,45 @@ class TransitionFade extends TransitionEffect
 	{
 		super(data);
 
-		back = makeSprite(data.direction.x, data.direction.y, data.region);
-		back.scrollFactor.set(0, 0);
-		add(back);
+		if (SelectionState.didLoadout)
+		{
+		
+
+			back =  new FlxSprite(); 
+			var daLoadout = "freeplay/" + GameState.playingSong.character;
+			back.loadGraphic(Paths.image(daLoadout));
+			back.antialiasing = true;
+			back.screenCenter();
+			back.scaleToFit();
+
+			back.scrollFactor.set(0, 0);
+
+			var loading:FlxSprite = new FlxSprite(0, 0);
+			loading.loadGraphic(Paths.image("loading/loading"));
+			loading.setGraphicSize(Std.int(FlxG.width), Std.int(FlxG.height));
+			loading.screenCenter();
+			loading.antialiasing = true;
+			loading.alpha = 0;
+
+
+			add(back);
+			add(loading);
+			
+
+			new FlxTimer().start(0.25, function(tmr:FlxTimer)
+			{
+				FlxTween.tween(loading, {alpha: 1}, 0.5, {});
+			});
+
+		}
+		else
+		{
+			back = makeSprite(data.direction.x, data.direction.y, data.region);
+			add(back);
+		}
+
+
+		
 	}
 
 	public override function destroy():Void

@@ -40,6 +40,23 @@ using flixel.util.FlxColorTransformUtil;
  */
 class FlxSprite extends FlxObject
 {
+
+	//--------------------FF engine
+
+	public function scaleToFit()
+	{
+		var daWidth = this.width;
+		var daHeight = this.height;
+
+		var dx = FlxG.width / daWidth;
+		var dy = FlxG.height / daHeight;
+
+		var ratio = Math.max(dx, dy);
+
+		this.scale.x = this.scale.y = ratio;
+	}
+
+	//--------------------------------
 	/**
 	 * Class that handles adding and playing animations on this sprite.
 	 */
