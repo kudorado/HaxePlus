@@ -155,7 +155,6 @@ class FlxState extends FlxGroup
 	{
 		FlxDestroyUtil.destroy(_subStateOpened);
 		FlxDestroyUtil.destroy(_subStateClosed);
-        
 		if (subState != null)
 		{
 			subState.destroy();

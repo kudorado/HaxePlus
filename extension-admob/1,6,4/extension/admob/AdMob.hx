@@ -41,7 +41,7 @@ class AdMob {
 
     public static function showInterstitial(minInterval:Int=60, minCallsBeforeDisplay:Int=0) {
         // displayCallsCounter++;
-        // #if android 
+        #if ios 
         // minInterval = 30;
         // #end
         minInterval = 0;
@@ -51,6 +51,8 @@ class AdMob {
 	    	// displayCallsCounter = 0;
 
         lastTimeInterstitial = Lib.getTimer();
+
+        #end
 
             #if android
              return __showInterstitial();

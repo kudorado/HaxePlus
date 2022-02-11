@@ -221,8 +221,18 @@ class AssetCache implements IAssetCache
 	**/
 	public function removeSound(id:String):Bool
 	{
+	
 		#if lime
+		// trace('is lime sound exist??: ' + LimeAssets.cache.audio.exists(id));
 		LimeAssets.cache.audio.remove(id);
+		#if debug
+		// trace('Clear lime sound: ' + id);
+		#end
+		#end
+
+		#if debug
+		// trace('is sound exist??: ' + sound.exists(id));
+		// trace('Clear sound: ' + id);
 		#end
 		return sound.remove(id);
 	}

@@ -25,14 +25,14 @@ class AssetLibrary
 	public var onChange = new Event<Void->Void>();
 
 	@:noCompletion private var assetsLoaded:Int;
-	@:noCompletion private var assetsTotal:Int;
-	@:noCompletion private var bytesLoaded:Int;
-	@:noCompletion private var bytesLoadedCache:Map<String, Int>;
+	@:noCompletion public var assetsTotal:Int;
+	@:noCompletion public var bytesLoaded:Int;
+	@:noCompletion public var bytesLoadedCache:Map<String, Int>;
 	@:noCompletion private var bytesTotal:Int;
 	@:noCompletion private var cachedAudioBuffers = new Map<String, AudioBuffer>();
 	@:noCompletion private var cachedBytes = new Map<String, Bytes>();
 	@:noCompletion private var cachedFonts = new Map<String, Font>();
-	@:noCompletion private var cachedImages = new Map<String, Image>();
+	@:noCompletion public var cachedImages = new Map<String, Image>();
 	@:noCompletion private var cachedText = new Map<String, String>();
 	@:noCompletion private var classTypes = new Map<String, Class<Dynamic>>();
 	@:noCompletion private var loaded:Bool;

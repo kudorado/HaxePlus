@@ -40,7 +40,7 @@ class Assets
 	public static var onChange = new Event<Void->Void>();
 
 	private static var bundlePaths = new Map<String, String>();
-	private static var libraries(default, null) = new Map<String, AssetLibrary>();
+	public static var libraries(default, null) = new Map<String, AssetLibrary>();
 	private static var libraryPaths = new Map<String, String>();
 
 	public static function exists(id:String, type:AssetType = null):Bool

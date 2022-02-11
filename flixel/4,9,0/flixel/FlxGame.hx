@@ -1,5 +1,7 @@
 package flixel;
 
+
+import flixel.graphics.FlxGraphic;
 import flash.Lib;
 import flash.display.Sprite;
 import flash.display.StageAlign;
@@ -10,6 +12,9 @@ import flixel.system.FlxSplash;
 import flixel.util.FlxArrayUtil;
 import openfl.Assets;
 import openfl.filters.BitmapFilter;
+
+import lime.utils.Assets as LimeAssets;
+
 #if desktop
 import flash.events.FocusEvent;
 #end
@@ -606,7 +611,25 @@ class FlxGame extends Sprite
 		if (_state != null) _state.destroy();
 
 		// we need to clear bitmap cache only after previous state is destroyed, which will reset useCount for FlxGraphic objects
+		// trace('clear cahe from FlxGame');
+
+		#if debug
+		#end
+
+		var k = 0;
+		for (i in FlxG.bitmap._cache.keys()) 
+			k ++;
+
+		trace('Before clear: ' + k);
+		
 		FlxG.bitmap.clearCache();
+
+		var a = 0;
+		for (i in FlxG.bitmap._cache.keys()) 
+			a ++;
+
+		trace('After clear: ' + a);
+		
 
 		// Finally assign and create the new state
 		_state = _requestedState;
@@ -624,6 +647,18 @@ class FlxGame extends Sprite
 		#end
 
 		FlxG.signals.postStateSwitch.dispatch();
+
+
+		var bc = 0;
+		for (i in FlxG.bitmap._cache.keys()) 
+		{
+			// trace('Bitmap[' + bc + ']: ' + i);
+			bc++;
+		}
+		trace('Bitmap count: ' + bc);
+
+
+	
 	}
 
 	function gameStart():Void

@@ -35,7 +35,7 @@ class BitmapFrontEnd
 	public var whitePixel(get, never):FlxFrame;
 
 	@:allow(flixel.system.frontEnds.BitmapLogFrontEnd)
-	var _cache:Map<String, FlxGraphic>;
+	public var _cache:Map<String, FlxGraphic>;
 
 	var _whitePixel:FlxFrame;
 
@@ -169,6 +169,7 @@ class BitmapFrontEnd
 	 */
 	public inline function addGraphic(graphic:FlxGraphic):FlxGraphic
 	{
+		// trace('add key: ' + graphic.key);
 		_cache.set(graphic.key, graphic);
 		return graphic;
 	}
@@ -337,10 +338,13 @@ class BitmapFrontEnd
 		for (key in _cache.keys())
 		{
 			var obj = get(key);
-			if (obj != null && !obj.persist && obj.useCount <= 0)
+			if (obj != null && !obj.persist) // && obj.useCount <= 0)
 			{
 				removeKey(key);
 				obj.destroy();
+			}
+			else{
+				trace('null: ' + obj + ",persist: " + obj.persist + ", uC: " + obj.useCount);
 			}
 		}
 	}
@@ -349,6 +353,7 @@ class BitmapFrontEnd
 	{
 		if (key != null)
 		{
+			// trace('remove key: ' + key);
 			Assets.cache.removeBitmapData(key);
 			_cache.remove(key);
 		}

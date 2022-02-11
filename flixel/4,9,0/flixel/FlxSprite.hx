@@ -428,11 +428,12 @@ class FlxSprite extends FlxObject
 	{
 		if(Graphic != null)
 			defaultDebugName = Graphic;
-		
+
 		var graph:FlxGraphic = FlxG.bitmap.add(Graphic, Unique, Key);
 		if (graph == null)
 			return this;
 
+//shit
 
 		if (Width == 0)
 		{
