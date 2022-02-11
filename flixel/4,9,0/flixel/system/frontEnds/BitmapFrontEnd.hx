@@ -170,7 +170,15 @@ class BitmapFrontEnd
 	public inline function addGraphic(graphic:FlxGraphic):FlxGraphic
 	{
 		// trace('add key: ' + graphic.key);
-		_cache.set(graphic.key, graphic);
+		if (!_cache.exists(graphic.key))
+			_cache.set(graphic.key, graphic);
+		else 
+		{
+			#if debug
+			trace('graphic already exists, fuck you haxe!');
+			#end
+		}
+
 		return graphic;
 	}
 
@@ -343,7 +351,8 @@ class BitmapFrontEnd
 				removeKey(key);
 				obj.destroy();
 			}
-			else{
+			else 
+			{
 				trace('null: ' + obj + ",persist: " + obj.persist + ", uC: " + obj.useCount);
 			}
 		}

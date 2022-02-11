@@ -1,5 +1,8 @@
 package haxeplus;
 
+
+import state.*;
+
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.ui.FlxButton;
@@ -178,7 +181,11 @@ class Debugger
 
 	public function update(elapsed:Float)
 	{
-
+		if (FlxG.keys.anyJustPressed([B]))
+		{
+			Debug(GameState.instance.dad);
+			return;
+		}
 		if (selectionObject == null)
 		{
 			cam.text = "SELECT AN OBJECT TO DEBUG!";

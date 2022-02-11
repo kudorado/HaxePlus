@@ -620,15 +620,15 @@ class FlxGame extends Sprite
 		for (i in FlxG.bitmap._cache.keys()) 
 			k ++;
 
-		trace('Before clear: ' + k);
+		// trace('Before clear: ' + k);
 		
 		FlxG.bitmap.clearCache();
 
-		var a = 0;
-		for (i in FlxG.bitmap._cache.keys()) 
-			a ++;
+		// var a = 0;
+		// for (i in FlxG.bitmap._cache.keys()) 
+		// 	a ++;
 
-		trace('After clear: ' + a);
+		// trace('After clear: ' + a);
 		
 
 		// Finally assign and create the new state
