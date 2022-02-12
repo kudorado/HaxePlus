@@ -179,13 +179,34 @@ class Debugger
 	}
 
 
-	public function update(elapsed:Float)
+	public function update(elapsed:Float) 
 	{
-		if (FlxG.keys.anyJustPressed([B]))
+		if (FlxG.keys.anyJustPressed([B])) 
+		{
+			Debug(GameState.instance.bf);
+			return;
+		}
+
+		if (FlxG.keys.anyJustPressed([N])) 
 		{
 			Debug(GameState.instance.dad);
 			return;
 		}
+		if (FlxG.keys.anyJustPressed([M])) 
+		{
+			Debug(GameState.instance.gf);
+			return;
+		}
+
+		if (FlxG.keys.anyJustPressed([V])) 
+		{
+			if (GameState.instance.player3 != null) {
+				Debug(GameState.instance.player3);
+				return;
+			}
+		}
+
+
 		if (selectionObject == null)
 		{
 			cam.text = "SELECT AN OBJECT TO DEBUG!";
