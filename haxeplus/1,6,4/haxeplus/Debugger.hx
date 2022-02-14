@@ -181,30 +181,28 @@ class Debugger
 
 	public function update(elapsed:Float) 
 	{
-		if (FlxG.keys.anyJustPressed([B])) 
-		{
+		#if desktop
+		if (FlxG.keys.anyJustPressed([B])) {
 			Debug(GameState.instance.bf);
 			return;
 		}
 
-		if (FlxG.keys.anyJustPressed([N])) 
-		{
+		if (FlxG.keys.anyJustPressed([N])) {
 			Debug(GameState.instance.dad);
 			return;
 		}
-		if (FlxG.keys.anyJustPressed([M])) 
-		{
+		if (FlxG.keys.anyJustPressed([M])) {
 			Debug(GameState.instance.gf);
 			return;
 		}
 
-		if (FlxG.keys.anyJustPressed([V])) 
-		{
+		if (FlxG.keys.anyJustPressed([V])) {
 			if (GameState.instance.player3 != null) {
 				Debug(GameState.instance.player3);
 				return;
 			}
 		}
+		#end
 
 
 		if (selectionObject == null)

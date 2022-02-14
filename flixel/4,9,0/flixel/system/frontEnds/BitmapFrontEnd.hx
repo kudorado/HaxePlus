@@ -353,7 +353,7 @@ class BitmapFrontEnd
 			}
 			else 
 			{
-				trace('null: ' + obj + ",persist: " + obj.persist + ", uC: " + obj.useCount);
+				// trace('null: ' + obj + ",persist: " + obj.persist + ", uC: " + obj.useCount);
 			}
 		}
 	}
