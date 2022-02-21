@@ -661,6 +661,12 @@ class FlxMouseEventManager extends FlxBasic
 	{
 		for (camera in Register.object.cameras)
 		{
+			if (camera == null) 
+			{
+				trace("Null camera!");
+				continue;
+			}
+			
 			_point = FlxG.mouse.getPositionInCameraView(camera, _point);
 			if (camera.containsPoint(_point))
 			{

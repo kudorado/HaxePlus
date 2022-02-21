@@ -5,6 +5,8 @@ import flixel.FlxSprite;
 import flixel.graphics.frames.FlxFrame;
 import flixel.util.FlxDestroyUtil.IFlxDestroyable;
 
+using StringTools;
+
 class FlxAnimationController implements IFlxDestroyable
 {
 	/**
@@ -472,7 +474,7 @@ class FlxAnimationController implements IFlxDestroyable
 	 */
 	public function addByPrefix(Name:String, Prefix:String, FrameRate:Int = 30, Looped:Bool = true, FlipX:Bool = false, FlipY:Bool = false):Void
 	{
-		if (Name == 'idle') //here we hardcode again LOL!
+		if (Name.contains('idle')) // here we hardcode again LOL!
 			Looped = true;
 
 		if (_sprite.frames != null)

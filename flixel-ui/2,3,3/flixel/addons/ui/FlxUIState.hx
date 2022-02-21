@@ -203,9 +203,10 @@ class FlxUIState extends FlxState implements IEventGetter implements IFlxUIState
 
 		tooltips.init();
 
-		Debugger.create(this, camera);
 		
 		super.create();
+		Debugger.create(this, camera);
+
 
 		cleanup();
 	}

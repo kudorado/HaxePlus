@@ -1,8 +1,6 @@
 package haxeplus;
 
-
 import state.*;
-
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.ui.FlxButton;
@@ -13,9 +11,9 @@ import flixel.FlxCamera;
 import flixel.group.FlxGroup;
 import flixel.FlxObject;
 
+class Debugger {
 
-class Debugger
-{
+	public static var timeScale:Float = 1;
 
 	public static var instance:Debugger;
 
@@ -41,31 +39,29 @@ class Debugger
 
 	static var cameraIndex:Int = 0;
 
-
 	private var remove:FlxButton;
 
-	public function new()
-	{
-	}
+	public function new() {}
 
-	static  var multiplier = 1000000;
-    
+	static var multiplier = 1000000;
+
 	static function round(value:Float):String
-    return Std.string(Math.round(value * multiplier) / multiplier);
+		return Std.string(Math.round(value * multiplier) / multiplier);
 
-
-	public static function create(group:FlxGroup, camera:FlxCamera)
-	{
+	public static function create(group:FlxGroup, camera:FlxCamera) {
 		#if !mobile
 		#if debug
 		instance = new Debugger();
-		instance.init(group, camera);
+		var shitCam = new FlxCamera();
+		shitCam.bgColor.alpha = 0;
+		FlxG.cameras.add(shitCam);
+
+		instance.init(group, shitCam);
 		#end
 		#end
 	}
 
-	public function init(group:FlxGroup, camera:FlxCamera)
-	{
+	public function init(group:FlxGroup, camera:FlxCamera) {
 		FlxMouseEventManager.init();
 
 		this.group = group;
@@ -74,9 +70,8 @@ class Debugger
 		initDebugObjects();
 	}
 
-	private function createShitText(color:FlxColor = FlxColor.WHITE): FlxText
-	{
-		var text = new FlxText(30, 30 * (index + 1), 0, "", 20);
+	private function createShitText(color:FlxColor = FlxColor.WHITE):FlxText {
+		var text = new FlxText(10, FlxG.height * 0.065 + 30 * (index + 1), 0, "", 20);
 		text.setFormat(Paths.font("vcr.ttf"), 20, color, RIGHT);
 		text.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 		text.scrollFactor.set();
@@ -84,29 +79,25 @@ class Debugger
 		group.add(text);
 		text.cameras = [camera];
 
-		index ++;
+		index++;
 
 		return text;
 	}
 
-	private function createShitButton(buttonLabel:String): FlxButton
-	{
-		var button = new FlxButton(30, FlxG.height - 30 * (index + 1), buttonLabel, function onClick()
-		{
+	private function createShitButton(buttonLabel:String):FlxButton {
+		var button = new FlxButton(10, FlxG.height * 0.065 - 30 * (index + 1), buttonLabel, function onClick() {
 			selectionObject = null;
 		});
 
 		group.add(button);
 		button.cameras = [camera];
 
-		index ++;
+		index++;
 
 		return button;
 	}
 
-	private function initDebugObjects()
-	{
-
+	private function initDebugObjects() {
 		cam = createShitText();
 		obj = createShitText();
 		x = createShitText();
@@ -115,13 +106,11 @@ class Debugger
 		scaleY = createShitText();
 		rotation = createShitText();
 		remove = createShitButton("Remove");
-		update(0);
 
+		update(0);
 	}
 
-
-	public function Debug(obj:FlxSprite)
-	{
+	public function Debug(obj:FlxSprite) {
 		UnSelect();
 
 		this.selectionObject = obj;
@@ -130,46 +119,35 @@ class Debugger
 		daOldAlpha = this.selectionObject.alpha;
 	}
 
-	public function UnSelect()
-	{
+	public function UnSelect() {
 		if (this.selectionObject == null)
 			return;
-
 
 		this.selectionObject.visible = daOldVisible;
 		this.selectionObject.alpha = daOldAlpha;
 		this.selectionObject.color = FlxColor.WHITE;
 		this.selectionObject = null;
 	}
-	
 
-	private function updateCamera()
-	{
-		if (FlxG.keys.anyJustPressed([C])) 
-		{
-			var cams =  FlxG.cameras.list;
-			if(cams == null || cams.length == 0) return;
+	private function updateCamera() {
+		if (FlxG.keys.anyJustPressed([C])) {
+			var camera = new FlxCamera();
+			camera.bgColor.alpha = 0;
+			FlxG.cameras.add(camera);
 
-			cameraIndex++;
-			if (cameraIndex >= cams.length) 
-			{
-				cameraIndex = 0;
-			}
-
-			camera = cams[cameraIndex];
 			cleanupObject();
-			create (group, camera); 
+			create(group, camera);
 		}
 	}
 
-	private function appendControlHepler(text:String, control:String) :String
-	{
+	private function appendControlHepler(text:String, control:String):String {
+		return text;
+		// temp ignore.
 		var maxDescription:Int = 50;
 
 		var daLength = (30 - text.length);
 
-		for (i in 0...daLength) 
-		{
+		for (i in 0...daLength) {
 			text += " ";
 		}
 
@@ -178,15 +156,39 @@ class Debugger
 		return text;
 	}
 
+	function timeScaleControl() {
+		if (FlxG.keys.anyJustPressed([G])) 
+		{
+			timeScale /= 2;
+			if (timeScale < 1)
+				timeScale = 0.1;
 
-	public function update(elapsed:Float) 
-	{
-		#if desktop
+			FlxG.timeScale = timeScale;
+		}
+
+		if (FlxG.keys.anyJustPressed([H])) 
+		{
+			timeScale *= 2;
+			if (timeScale > 16)
+				timeScale = 16;
+
+			FlxG.timeScale = timeScale;
+		}
+
+		if (FlxG.keys.anyJustPressed([T])) 
+		{
+			timeScale = 1;
+			FlxG.timeScale = timeScale;
+		}
+	}
+
+	public function update(elapsed:Float) {
+		timeScaleControl();
+
 		if (FlxG.keys.anyJustPressed([B])) {
 			Debug(GameState.instance.bf);
 			return;
 		}
-
 		if (FlxG.keys.anyJustPressed([N])) {
 			Debug(GameState.instance.dad);
 			return;
@@ -202,11 +204,8 @@ class Debugger
 				return;
 			}
 		}
-		#end
 
-
-		if (selectionObject == null)
-		{
+		if (selectionObject == null) {
 			cam.text = "SELECT AN OBJECT TO DEBUG!";
 			x.text = "";
 			y.text = "";
@@ -221,7 +220,6 @@ class Debugger
 		var flipX = selectionObject.flipX;
 		var flipY = selectionObject.flipY;
 
-
 		cam.text = "Camera" + "(" + cameraIndex + ")";
 		obj.text = selectionObject.debugName().toUpperCase();
 
@@ -231,18 +229,15 @@ class Debugger
 		x.text = "x: " + Std.int(selectionObject.x) + " | flip X: " + flipX;
 		y.text = "y: " + Std.int(selectionObject.y) + " | flip Y: " + flipY;
 
-
-		if (selectionObject.scale != null) 
-		{
+		if (selectionObject.scale != null) {
 			scaleX.text = "scale X: " + round(selectionObject.scale.x);
 			scaleY.text = "scale Y: " + round(selectionObject.scale.y);
 		}
-	
+
 		rotation.text = "rotation: " + round(selectionObject.angle);
 		remove.visible = true;
 
-
-		cam.text =  appendControlHepler(cam.text, "|C|");
+		cam.text = appendControlHepler(cam.text, "|C|");
 		x.text = appendControlHepler(x.text, "|←↓↑→| |ASWD| |JKIL| - X -");
 		y.text = appendControlHepler(y.text, "|←↓↑→| |ASWD| |JKIL| - Y -");
 
@@ -265,13 +260,9 @@ class Debugger
 		var rotationNes = FlxG.keys.anyPressed([COMMA]);
 		var rotationPos = FlxG.keys.anyPressed([PERIOD]);
 
-
-
-
 		var fX = FlxG.keys.anyJustPressed([X]);
 		var fY = FlxG.keys.anyJustPressed([Y]);
 
-		
 		var multiplier = 0.5;
 		var holdShift = FlxG.keys.pressed.SHIFT;
 		if (holdShift)
@@ -287,44 +278,41 @@ class Debugger
 		if (rightP)
 			selectionObject.x += 1 * multiplier;
 
-
 		//-------------- rotation -----------
-		if(rotationPos)
+		if (rotationPos)
 			selectionObject.angle += elapsed * (multiplier > 1 ? 10 : 1) * 2;
 
-		if(rotationNes)
+		if (rotationNes)
 			selectionObject.angle -= elapsed * (multiplier > 1 ? 10 : 1) * 2;
 
 		//--------------- scale -------------
-		if(scaleXNeg || (scaleYNeg && !holdShift))
-			selectionObject.scale.x	 -= elapsed;
+		if (scaleXNeg || (scaleYNeg && !holdShift))
+			selectionObject.scale.x -= elapsed;
 
-		if(scaleXPos || (scaleYPos && !holdShift))
-			selectionObject.scale.x += elapsed ;
+		if (scaleXPos || (scaleYPos && !holdShift))
+			selectionObject.scale.x += elapsed;
 
-		if(scaleYNeg || (scaleXNeg && !holdShift))
-			selectionObject.scale.y -= elapsed ;
+		if (scaleYNeg || (scaleXNeg && !holdShift))
+			selectionObject.scale.y -= elapsed;
 
-		if(scaleYPos || (scaleXPos && !holdShift))
-			selectionObject.scale.y += elapsed ;
+		if (scaleYPos || (scaleXPos && !holdShift))
+			selectionObject.scale.y += elapsed;
 
 		//---------------- flip --------------
 
-		if(fX)
+		if (fX)
 			selectionObject.flipX = !selectionObject.flipX;
-	
-		if(fY) 
+
+		if (fY)
 			selectionObject.flipY = !selectionObject.flipY;
 
 		// selectionObject.updateHitbox();
 
 		updateCamera();
 		updateObject();
-
 	}
 
-	function cleanupObject() 
-	{
+	function cleanupObject() {
 		group.remove(obj);
 		group.remove(x);
 		group.remove(y);
@@ -336,15 +324,10 @@ class Debugger
 		UnSelect();
 	}
 
-	function updateObject()
-	{
-		if (FlxG.keys.anyJustPressed([Q]))
-		{
-			cleanupObject();	
-			create (group, camera); 
+	function updateObject() {
+		if (FlxG.keys.anyJustPressed([Q])) {
+			cleanupObject();
+			create(group, camera);
 		}
 	}
-
-
-
 }
