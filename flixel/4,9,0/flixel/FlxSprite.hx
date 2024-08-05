@@ -284,7 +284,7 @@ class FlxSprite extends FlxObject
 	 *                          (OPTIONAL - for simple stuff only, do NOT use for animated images!).
 	 */
 
-	var defaultDebugName = "defaultObject";
+	public var defaultDebugName = "defaultObject";
 	public function debugName() 
 	{
 		return defaultDebugName;
